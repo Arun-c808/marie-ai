@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Marie AI</title>
+<meta name="description" content="A humanless accounts team for Malaysian small businesses. Marie AI automates bookkeeping end-to-end — from raw documents to real-time financials." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #0e0e0e;
+  --ink-mid: #3a3a3a;
+  --ink-soft: #6b6b6b;
+  --ink-faint: #a8a8a8;
+  --rule: #dedede;
+  --bg: #faf9f7;
+  --white: #ffffff;
+  --accent: #1a46ff;
+  --serif: 'Newsreader', Georgia, serif;
+  --mono: 'DM Mono', 'Courier New', monospace;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--serif);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(250,249,247,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(24px, 5vw, 80px);
+  height: 52px;
+}
+
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-soft);
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--ink); }
+
+.nav-links .cta-link {
+  color: var(--accent);
+}
+
+.nav-links .cta-link:hover { color: var(--ink); }
+
+/* LAYOUT */
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 5vw, 48px);
+}
+
+.container-wide {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 5vw, 48px);
+}
+
+/* HERO */
+.hero {
+  padding: 140px 0 80px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.hero-kicker {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-kicker::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: var(--ink-faint);
+}
+
+.hero h1 {
+  font-size: clamp(38px, 6vw, 72px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 32px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--ink-mid);
+}
+
+.hero-intro {
+  font-size: clamp(17px, 2vw, 20px);
+  color: var(--ink-mid);
+  line-height: 1.65;
+  max-width: 620px;
+  margin-bottom: 20px;
+}
+
+.hero-intro + .hero-intro {
+  margin-bottom: 0;
+}
+
+/* TICKER */
+.ticker-wrap {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 14px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  background: var(--white);
+}
+
+.ticker {
+  display: inline-flex;
+  gap: 0;
+  animation: ticker 28s linear infinite;
+}
+
+.ticker-item {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 0 32px;
+  border-right: 1px solid var(--rule);
+}
+
+.ticker-item:last-child { border-right: none; }
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* SECTIONS */
+section {
+  padding: 80px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+section:last-of-type { border-bottom: none; }
+
+.section-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-tag::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+h2.section-heading {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 400;
+  letter-spacing: -0.018em;
+  line-height: 1.14;
+  color: var(--ink);
+  margin-bottom: 28px;
+}
+
+h2.section-heading em { font-style: italic; }
+
+.body-text {
+  font-size: 17px;
+  color: var(--ink-mid);
+  line-height: 1.72;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.body-text:last-child { margin-bottom: 0; }
+
+/* MANIFESTO BLOCKS */
+.manifesto {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.manifesto-item {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 0 56px;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: start;
+}
+
+.manifesto-item:first-child { border-top: 1px solid var(--rule); }
+
+.manifesto-label {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  padding-top: 2px;
+  line-height: 1.4;
+}
+
+.manifesto-label em {
+  display: block;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+.manifesto-body {
+  font-size: 16px;
+  color: var(--ink-mid);
+  line-height: 1.72;
+  font-weight: 300;
+}
+
+/* PIPELINE */
+.pipeline-list {
+  list-style: none;
+  counter-reset: pipeline;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--rule);
+}
+
+.pipeline-list li {
+  counter-increment: pipeline;
+  display: flex;
+  align-items: baseline;
+  gap: 28px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 16px;
+  color: var(--ink-mid);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.pipeline-list li::before {
+  content: counter(pipeline, decimal-leading-zero);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+  padding-top: 4px;
+}
+
+.pipeline-name {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* OUTPUTS TABLE */
+.outputs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+.outputs-table th {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  text-align: left;
+  padding: 0 0 16px;
+  border-bottom: 1px solid var(--rule);
+  font-weight: 400;
+}
+
+.outputs-table th:last-child { text-align: right; }
+
+.outputs-table td {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-mid);
+  font-weight: 300;
+  vertical-align: top;
+}
+
+.outputs-table td:first-child {
+  font-weight: 400;
+  color: var(--ink);
+  width: 220px;
+  padding-right: 40px;
+}
+
+.outputs-table td:last-child {
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  padding-left: 24px;
+  white-space: nowrap;
+}
+
+/* COMPLIANCE GRID */
+.compliance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-top: 40px;
+}
+
+.compliance-cell {
+  background: var(--bg);
+  padding: 32px 28px;
+}
+
+.compliance-cell-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 10px;
+}
+
+.compliance-cell-title {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+.compliance-cell-desc {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* CONTACT */
+.contact-form {
+  margin-top: 40px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 40px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 32px;
+  padding-bottom: 8px;
+}
+
+.field label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 8px;
+}
+
+.field input,
+.field select,
+.field textarea {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 300;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  width: 100%;
+  line-height: 1.5;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+.field textarea {
+  resize: none;
+  min-height: 80px;
+}
+
+.field select {
+  cursor: pointer;
+  color: var(--ink-soft);
+}
+
+.submit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+}
+
+.submit-btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--ink);
+  border: none;
+  padding: 14px 28px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.submit-btn:hover { background: var(--accent); }
+
+.submit-note {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 40px 0;
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.footer-logo {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.footer-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+
+.footer-links a {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--ink); }
+
+.footer-copy {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+}
+
+/* INLINE LINK */
+a.inline-link {
+  color: var(--ink);
+  text-decoration-color: var(--rule);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s;
+}
+
+a.inline-link:hover { text-decoration-color: var(--accent); }
+
+/* SCROLL ANIMATION */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 680px) {
+  .manifesto-item {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .form-row { grid-template-columns: 1fr; }
+  .compliance-grid { grid-template-columns: 1fr; }
+  .outputs-table td:last-child { display: none; }
+  nav { padding: 0 20px; }
+  .nav-links { gap: 20px; }
+  .nav-links li:nth-child(2), .nav-links li:nth-child(3) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Marie AI</a>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">Platform</a></li>
+    <li><a href="#compliance">Compliance</a></li>
+    <li><a href="#outputs">Outputs</a></li>
+    <li><a href="#contact" class="cta-link">Contact us</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="container">
+    <div class="hero-kicker">Kuala Lumpur, Malaysia · Est. 2025</div>
+    <h1>The <em>humanless</em><br/>accounts team<br/>for SMEs.</h1>
+    <p class="hero-intro">Marie AI is a bookkeeping platform built for Malaysians. We ingest raw financial documents to automate much of the bookkeeping workflow — from extraction to reconciliation to real-time financials. Stay ahead of filings and deadlines.</p>
+    <p class="hero-intro">No bookkeeper. No data entry. Just accurate books, always.</p>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item">Cash Flow Analysis</span>
+    <span class="ticker-item">Bank Reconciliation</span>
+    <span class="ticker-item">Compliance Alerts</span>
+    <span class="ticker-item">7-Year Document Retention</span>
+    <span class="ticker-item">LHDN E-Invoicing</span>
+    <span class="ticker-item">Payroll Workflow</span>
+    <span class="ticker-item">Tax Intelligence</span>
+    <span class="ticker-item">Ingestion via Telegram</span>
+    <span class="ticker-item">Secure Auditor Access</span>
+    <span class="ticker-item">Counterparty Directory</span>
+    <span class="ticker-item">Cash Flow Analysis</span>
+    <span class="ticker-item">Bank Reconciliation</span>
+    <span class="ticker-item">Compliance Alerts</span>
+    <span class="ticker-item">7-Year Document Retention</span>
+    <span class="ticker-item">LHDN E-Invoicing</span>
+    <span class="ticker-item">Payroll Workflow</span>
+    <span class="ticker-item">Tax Intelligence</span>
+    <span class="ticker-item">Ingestion via Telegram</span>
+    <span class="ticker-item">Secure Auditor Access</span>
+    <span class="ticker-item">Counterparty Directory</span>
+  </div>
+</div>
+
+<!-- WHY MARIE AI -->
+<section>
+  <div class="container">
+    <div class="section-tag">Why Marie AI</div>
+    <h2 class="section-heading">Accounting is<br/>a <em>solved problem</em>.</h2>
+    <p class="body-text">Small businesses in Malaysia spend an average of 15 hours per month on bookkeeping tasks — invoicing, data entry, bank reconciliation, tax filing preparation. Most of this is manual, repetitive, and error-prone. And yet, accurate books are fundamental to every business decision that matters.</p>
+    <p class="body-text">The promise of accounting software was automation, but what most tools delivered was a slightly faster spreadsheet. You still need a human — a bookkeeper, an accountant, a finance manager — to touch every transaction. The software was the interface. The labour was still yours.</p>
+    <p class="body-text">Marie AI is different. We are building a platform where the document <em>is</em> the input, and real-time, auditable financials are the output. No intermediate human steps. No month-end close anxiety. No chasing receipts. The accounts just work.</p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="container">
+    <div class="section-tag">The Platform</div>
+    <h2 class="section-heading">From raw document<br/>to <em>general ledger</em>.</h2>
+    <p class="body-text">Every transaction in your business begins as a document — an invoice, a receipt, a bank statement. Marie AI's pipeline transforms those documents into structured, double-entry accounting data automatically.</p>
+  </div>
+  <div class="container" style="margin-top: 40px;">
+    <ul class="pipeline-list">
+      <li>
+        <div>
+          <span class="pipeline-name">Document Ingestion</span>
+          Upload invoices, receipts, and bank statements by email, drag-and-drop, or API. Any format — PDF, image, CSV, XML.
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="pipeline-name">Data Extraction</span>
+          OCR and AI extract structured fields — amounts, dates, vendor names, tax codes — with high accuracy, validated against source documents.
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="pipeline-name">Transaction Normalisation</span>
+          Raw extractions are cleaned, deduped, and resolved into a Universal Transaction Model — a consistent schema regardless of document source or format.
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="pipeline-name">Intent Classification</span>
+          Each transaction is classified by type — sale, purchase, payroll, asset acquisition, tax payment — against your accounting policy and Malaysia-specific tax rules.
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="pipeline-name">Account Mapping</span>
+          Transactions are mapped to your chart of accounts using a policy engine that learns from your historical patterns and applies configurable rules.
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="pipeline-name">Journal Generation</span>
+          Double-entry journal entries are created automatically — debits, credits, GST/SST allocations, foreign currency conversion — and posted to subledgers.
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="pipeline-name">Matching & Reconciliation</span>
+          Bank statements are matched to ledger entries. AR and AP are cleared. Exceptions are surfaced for review. The matching engine improves with each cycle.
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="pipeline-name">Learning Feedback Loop</span>
+          Every correction you make trains the system. Over time, Marie AI adapts to your business's patterns, vendors, and classification preferences.
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section>
+  <div class="container">
+    <div class="section-tag">Principles</div>
+    <h2 class="section-heading">How we think<br/>about <em>automation</em>.</h2>
+  </div>
+  <div class="container">
+    <div class="manifesto">
+      <div class="manifesto-item reveal">
+        <div class="manifesto-label">
+          Documents are the source of truth.
+          <em>Not forms. Not spreadsheets.</em>
+        </div>
+        <div class="manifesto-body">Every accounting system eventually asks you to re-enter information that already exists in a document. This is wasteful and error-prone. Marie AI is built around the document as the primary input — the system reads what you already have, rather than asking you to re-key it.</div>
+      </div>
+      <div class="manifesto-item reveal">
+        <div class="manifesto-label">
+          Automation should be auditable.
+          <em>Not a black box.</em>
+        </div>
+        <div class="manifesto-body">We believe every automated decision in accounting must be traceable. Every journal entry Marie AI generates links back to the source document, the extraction, and the classification rule that produced it. You can follow the chain from financial statement to receipt at any time.</div>
+      </div>
+      <div class="manifesto-item reveal">
+        <div class="manifesto-label">
+          Compliance is built-in.
+          <em>Not an afterthought.</em>
+        </div>
+        <div class="manifesto-body">Malaysia's regulatory environment — LHDN, SST, the e-invoicing mandate — is part of the core platform, not a plugin. We maintain the compliance rules so you don't have to track regulatory changes, update templates, or worry about whether your invoices are valid.</div>
+      </div>
+      <div class="manifesto-item reveal">
+        <div class="manifesto-label">
+          Small businesses deserve<br/>institutional-grade tools.
+          <em>Not scaled-down enterprise software.</em>
+        </div>
+        <div class="manifesto-body">The financial infrastructure available to large corporations — real-time management accounts, automated reconciliation, AR/AP aging, fixed asset tracking — should not require a finance department to operate. We are building these capabilities to be accessible to a business of five people running on tight margins.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTPUTS -->
+<section id="outputs">
+  <div class="container">
+    <div class="section-tag">Financial Outputs</div>
+    <h2 class="section-heading">Every report,<br/><em>always current.</em></h2>
+    <p class="body-text">Marie AI continuously produces the financial intelligence your business depends on. Not at month-end. Not after your accountant files. Now.</p>
+
+    <table class="outputs-table">
+      <thead>
+        <tr>
+          <th>Report</th>
+          <th>Description</th>
+          <th>Update frequency</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Income Statement</td>
+          <td>Revenue, cost of goods sold, gross profit, operating expenses, and net profit — segmented by period and category.</td>
+          <td>Real-time</td>
+        </tr>
+        <tr>
+          <td>Balance Sheet</td>
+          <td>Assets, liabilities, and equity as of any point in time. Drill through to the underlying transactions at any line.</td>
+          <td>Real-time</td>
+        </tr>
+        <tr>
+          <td>Cash Flow Statement</td>
+          <td>Operating, investing, and financing cash flows presented as a waterfall. Forecast overlay available.</td>
+          <td>Real-time</td>
+        </tr>
+        <tr>
+          <td>Bank Reconciliation</td>
+          <td>Automated matching of bank statement lines to ledger entries. Unmatched items surfaced for review.</td>
+          <td>On statement import</td>
+        </tr>
+        <tr>
+          <td>AR / AP Aging</td>
+          <td>Receivables and payables grouped by age band. Overdue items flagged with days outstanding.</td>
+          <td>Daily</td>
+        </tr>
+        <tr>
+          <td>Fixed Asset Register</td>
+          <td>Asset additions, disposals, depreciation schedules, and net book value by asset class.</td>
+          <td>On transaction</td>
+        </tr>
+        <tr>
+          <td>General Ledger</td>
+          <td>Full double-entry ledger with audit trail linking every entry to its source document.</td>
+          <td>Real-time</td>
+        </tr>
+        <tr>
+          <td>Document Vault</td>
+          <td>Every ingested document indexed and retrievable for 7 years, per LHDN statute of limitation.</td>
+          <td>Always</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- COMPLIANCE -->
+<section id="compliance">
+  <div class="container">
+    <div class="section-tag">Compliance</div>
+    <h2 class="section-heading">Built for<br/><em>Malaysia's rules</em>.</h2>
+    <p class="body-text">We built Marie AI specifically for the Malaysian regulatory environment. LHDN requirements, the e-invoicing mandate, SST filing — these are not features we added later. They are load-bearing parts of the platform.</p>
+  </div>
+  <div class="container">
+    <div class="compliance-grid">
+      <div class="compliance-cell reveal">
+        <div class="compliance-cell-label">e-Invoicing</div>
+        <div class="compliance-cell-title">LHDN MyInvois API</div>
+        <div class="compliance-cell-desc">Generate, sign, and validate e-invoices through the official LHDN MyInvois API. QR code generation, XML submission, and real-time validation status — fully compliant with Malaysia's phased e-invoicing mandate.</div>
+      </div>
+      <div class="compliance-cell reveal">
+        <div class="compliance-cell-label">Tax</div>
+        <div class="compliance-cell-title">SST Compliance</div>
+        <div class="compliance-cell-desc">Service Tax and Sales Tax codes are mapped automatically based on transaction type and vendor category. SST-02 return data can be extracted directly from Marie AI's records at filing time.</div>
+      </div>
+      <div class="compliance-cell reveal">
+        <div class="compliance-cell-label">Document Retention</div>
+        <div class="compliance-cell-title">7-Year Vault</div>
+        <div class="compliance-cell-desc">All ingested documents are stored, indexed, and retrievable for a minimum of 7 years in alignment with LHDN's audit and inspection rights. Full-text search across all your financial documents — instantly.</div>
+      </div>
+      <div class="compliance-cell reveal">
+        <div class="compliance-cell-label">Audit Trail</div>
+        <div class="compliance-cell-title">Complete Traceability</div>
+        <div class="compliance-cell-desc">Every journal entry links to its source document, every extraction links to its source file, and every rule application is logged. If LHDN asks, you can produce the full paper trail from financial statement to original receipt in seconds.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-tag">Contact</div>
+    <h2 class="section-heading">Let's talk<br/>about your books.</h2>
+    <p class="body-text">We're working with a small number of Malaysian businesses to refine the platform before a broader launch. If you're interested in replacing your bookkeeping workflow with Marie AI, tell us about your business.</p>
+    <p class="body-text">We read every message and will reply within one business day.</p>
+
+    <div class="contact-form">
+      <form action="https://formspree.io/f/mdajzoob" method="POST" id="contact-form">
+      <div class="form-row">
+        <div class="field">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="Ahmad Razif" />
+        </div>
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="you@company.com.my" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="company">Company</label>
+          <input type="text" id="company" name="company" placeholder="Syarikat ABC Sdn Bhd" />
+        </div>
+        <div class="field">
+          <label for="size">Business Size</label>
+          <select id="size" name="size">
+            <option value="" disabled selected>Select size</option>
+            <option>1–5 employees</option>
+            <option>6–20 employees</option>
+            <option>21–50 employees</option>
+            <option>50+ employees</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="message">Tell us about your bookkeeping situation</label>
+        <textarea id="message" name="message" placeholder="We currently handle bookkeeping manually / through an external accountant..."></textarea>
+      </div>
+      <div class="submit-row">
+        <button class="submit-btn" type="submit">Send message →</button>
+        <span class="submit-note" id="submit-status">We respond within 1 business day.</span>
+      </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="#" class="footer-logo">Marie AI</a>
+      <ul class="footer-links">
+        <li><a href="#how-it-works">Platform</a></li>
+        <li><a href="#compliance">Compliance</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#">Privacy</a></li>
+      </ul>
+      <span class="footer-copy">© 2025 Marie AI · Kuala Lumpur 🇲🇾</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  // Form submit
+  const form = document.getElementById('contact-form');
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    if (!name || !email) {
+      document.getElementById('submit-status').textContent = 'Please fill in your name and email.';
+      return;
+    }
+    const btn = document.querySelector('.submit-btn');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    const data = new FormData(form);
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (response.ok) {
+      btn.textContent = 'Message sent.';
+      btn.style.background = '#1a46ff';
+      document.getElementById('submit-status').textContent = "We'll be in touch shortly.";
+      form.reset();
+    } else {
+      btn.textContent = 'Send message →';
+      btn.disabled = false;
+      document.getElementById('submit-status').textContent = 'Something went wrong. Please try again.';
+    }
+  });
+</script>
+</body>
+</html>

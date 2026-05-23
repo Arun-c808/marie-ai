@@ -575,9 +575,56 @@ a.inline-link:hover { text-decoration-color: var(--accent); }
   .compliance-grid { grid-template-columns: 1fr; }
   .outputs-table td:last-child { display: none; }
   nav { padding: 0 20px; }
-  .nav-links { gap: 20px; }
-  .nav-links li:nth-child(2), .nav-links li:nth-child(3) { display: none; }
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 52px;
+    left: 0;
+    right: 0;
+    background: rgba(250,249,247,0.98);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    flex-direction: column;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+    z-index: 99;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links li { border-bottom: 1px solid var(--rule); }
+  .nav-links li a {
+    display: block;
+    padding: 16px 20px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+  }
+  .hamburger { display: flex; }
 }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: auto;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--ink);
+  transition: all 0.25s ease;
+  transform-origin: center;
+}
+
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
 </style>
 </head>
 <body>
@@ -585,12 +632,15 @@ a.inline-link:hover { text-decoration-color: var(--accent); }
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">Marie AI</a>
-  <ul class="nav-links">
-    <li><a href="#how-it-works">Platform</a></li>
-    <li><a href="#compliance">Compliance</a></li>
-    <li><a href="#outputs">Outputs</a></li>
-    <li><a href="#contact" class="cta-link">Contact us</a></li>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#how-it-works" onclick="closeMenu()">Platform</a></li>
+    <li><a href="#compliance" onclick="closeMenu()">Compliance</a></li>
+    <li><a href="#outputs" onclick="closeMenu()">Outputs</a></li>
+    <li><a href="#contact" class="cta-link" onclick="closeMenu()">Contact us</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -912,6 +962,18 @@ a.inline-link:hover { text-decoration-color: var(--accent); }
   }, { threshold: 0.12 });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  function toggleMenu() {
+    const nav = document.getElementById('nav-links');
+    const btn = document.getElementById('hamburger');
+    nav.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+
+  function closeMenu() {
+    document.getElementById('nav-links').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+  }
 
   // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(a => {

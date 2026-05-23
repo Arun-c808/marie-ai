@@ -70,6 +70,12 @@ nav {
   list-style: none;
 }
 
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .nav-links a {
   font-family: var(--mono);
   font-size: 11px;
@@ -319,6 +325,42 @@ h2.section-heading em { font-style: italic; }
 }
 
 /* OUTPUTS TABLE */
+.outputs-cards {
+  display: none;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 8px;
+  border-top: 1px solid var(--rule);
+}
+
+.output-card {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.output-card-name {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.output-card-freq {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 8px;
+}
+
+.output-card-desc {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--ink-mid);
+  line-height: 1.6;
+}
+
 .outputs-table {
   width: 100%;
   border-collapse: collapse;
@@ -573,57 +615,122 @@ a.inline-link:hover { text-decoration-color: var(--accent); }
   }
   .form-row { grid-template-columns: 1fr; }
   .compliance-grid { grid-template-columns: 1fr; }
-  .outputs-table td:last-child { display: none; }
+  .outputs-table { display: none; }
+  .outputs-cards { display: flex !important; }
   nav { padding: 0 20px; }
+  /* Show hamburger on mobile */
+  .hamburger {
+    display: flex !important;
+    margin-left: auto;
+  }
+  /* Full-screen solid menu */
   .nav-links {
     display: none;
-    position: fixed;
-    top: 52px;
-    left: 0;
-    right: 0;
-    background: rgba(250,249,247,0.98);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    flex-direction: column;
-    gap: 0;
-    border-bottom: 1px solid var(--rule);
-    z-index: 99;
   }
-  .nav-links.open { display: flex; }
-  .nav-links li { border-bottom: 1px solid var(--rule); }
-  .nav-links li a {
+  .nav-links.open {
     display: block;
-    padding: 16px 20px;
-    font-size: 13px;
-    letter-spacing: 0.08em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #faf9f7;
+    z-index: 9998;
+    overflow: hidden;
   }
-  .hamburger { display: flex; }
+  /* Centre the links inside the open menu */
+  .nav-links.open li {
+    border: none;
+    width: 100%;
+    text-align: center;
+    list-style: none;
+  }
+  .nav-links.open li a {
+    display: block;
+    padding: 20px 24px;
+    font-size: 28px;
+    font-family: var(--serif);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: -0.01em;
+    color: var(--ink-mid);
+    transition: color 0.15s;
+  }
+  .nav-links.open li a:active { color: var(--accent); }
+  .nav-links.open .cta-link { color: var(--accent) !important; }
+  /* Show the ✕ close item inside the open menu */
+  .nav-links.open .menu-close-item {
+    display: block;
+    position: fixed;
+    top: 14px;
+    right: 20px;
+    z-index: 9999;
+  }
+  .menu-close-item .menu-close {
+    font-size: 22px;
+    color: var(--ink-soft);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+  .submit-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .submit-btn {
+    width: 100%;
+    text-align: center;
+  }
+  .submit-note {
+    font-size: 11px;
+  }
 }
 
+/* Hamburger — hidden on desktop, shown on mobile */
 .hamburger {
   display: none;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 5px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 8px;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
   margin-left: auto;
 }
 
 .hamburger span {
   display: block;
   width: 22px;
-  height: 1.5px;
-  background: var(--ink);
-  transition: all 0.25s ease;
-  transform-origin: center;
+  height: 2px;
+  background: #0e0e0e;
+  border-radius: 0;
 }
 
-.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+/* Close button inside the open menu */
+.menu-close-item {
+  display: none;
+}
+
+.menu-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 18px;
+  color: var(--ink-soft);
+  padding: 20px 24px;
+  line-height: 1;
+  display: block;
+  width: 100%;
+  text-align: right;
+}
 
 </style>
 </head>
@@ -637,8 +744,9 @@ a.inline-link:hover { text-decoration-color: var(--accent); }
     <li><a href="#compliance" onclick="closeMenu()">Compliance</a></li>
     <li><a href="#outputs" onclick="closeMenu()">Outputs</a></li>
     <li><a href="#contact" class="cta-link" onclick="closeMenu()">Contact us</a></li>
+    <li class="menu-close-item"><button class="menu-close" id="menu-close" onclick="closeMenu()">&#x2715;</button></li>
   </ul>
-  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Open menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
@@ -849,6 +957,51 @@ a.inline-link:hover { text-decoration-color: var(--accent); }
         </tr>
       </tbody>
     </table>
+
+    <!-- Mobile cards version -->
+    <div class="outputs-cards">
+      <div class="output-card">
+        <div class="output-card-name">Income Statement</div>
+        <div class="output-card-freq">Real-time</div>
+        <div class="output-card-desc">Revenue, cost of goods sold, gross profit, operating expenses, and net profit — segmented by period and category.</div>
+      </div>
+      <div class="output-card">
+        <div class="output-card-name">Balance Sheet</div>
+        <div class="output-card-freq">Real-time</div>
+        <div class="output-card-desc">Assets, liabilities, and equity as of any point in time. Drill through to the underlying transactions at any line.</div>
+      </div>
+      <div class="output-card">
+        <div class="output-card-name">Cash Flow Statement</div>
+        <div class="output-card-freq">Real-time</div>
+        <div class="output-card-desc">Operating, investing, and financing cash flows presented as a waterfall. Forecast overlay available.</div>
+      </div>
+      <div class="output-card">
+        <div class="output-card-name">Bank Reconciliation</div>
+        <div class="output-card-freq">On statement import</div>
+        <div class="output-card-desc">Automated matching of bank statement lines to ledger entries. Unmatched items surfaced for review.</div>
+      </div>
+      <div class="output-card">
+        <div class="output-card-name">AR / AP Aging</div>
+        <div class="output-card-freq">Daily</div>
+        <div class="output-card-desc">Receivables and payables grouped by age band. Overdue items flagged with days outstanding.</div>
+      </div>
+      <div class="output-card">
+        <div class="output-card-name">Fixed Asset Register</div>
+        <div class="output-card-freq">On transaction</div>
+        <div class="output-card-desc">Asset additions, disposals, depreciation schedules, and net book value by asset class.</div>
+      </div>
+      <div class="output-card">
+        <div class="output-card-name">General Ledger</div>
+        <div class="output-card-freq">Real-time</div>
+        <div class="output-card-desc">Full double-entry ledger with audit trail linking every entry to its source document.</div>
+      </div>
+      <div class="output-card">
+        <div class="output-card-name">Document Vault</div>
+        <div class="output-card-freq">Always</div>
+        <div class="output-card-desc">Every ingested document indexed and retrievable for 7 years, per LHDN statute of limitation.</div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -943,9 +1096,9 @@ a.inline-link:hover { text-decoration-color: var(--accent); }
         <li><a href="#how-it-works">Platform</a></li>
         <li><a href="#compliance">Compliance</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><a href="#">Privacy</a></li>
+        <li><a href="#outputs">Outputs</a></li>
       </ul>
-      <span class="footer-copy">© 2025 Marie AI · Kuala Lumpur 🇲🇾</span>
+      <span class="footer-copy">© 2026 Marie AI · Kuala Lumpur 🇲🇾</span>
     </div>
   </div>
 </footer>
@@ -966,12 +1119,23 @@ a.inline-link:hover { text-decoration-color: var(--accent); }
   function toggleMenu() {
     const nav = document.getElementById('nav-links');
     const btn = document.getElementById('hamburger');
-    nav.classList.toggle('open');
+    const isOpen = nav.classList.toggle('open');
     btn.classList.toggle('open');
+    // When open, centre the links vertically
+    if (isOpen) {
+      nav.style.display = 'flex';
+      nav.style.flexDirection = 'column';
+      nav.style.alignItems = 'center';
+      nav.style.justifyContent = 'center';
+    } else {
+      nav.style.display = '';
+    }
   }
 
   function closeMenu() {
-    document.getElementById('nav-links').classList.remove('open');
+    const nav = document.getElementById('nav-links');
+    nav.classList.remove('open');
+    nav.style.display = '';
     document.getElementById('hamburger').classList.remove('open');
   }
 
